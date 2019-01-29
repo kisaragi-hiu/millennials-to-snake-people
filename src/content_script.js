@@ -1,5 +1,4 @@
-function walk(rootNode)
-{
+function walk(rootNode) {
     // Find all the text nodes in rootNode
     var walker = document.createTreeWalker(
         rootNode,
@@ -10,7 +9,7 @@ function walk(rootNode)
     node;
 
     // Modify each text node's value
-    while (node = walker.nextNode()) {
+    while ((node = walker.nextNode())) {
         handleText(node);
     }
 }
@@ -19,8 +18,7 @@ function handleText(textNode) {
   textNode.nodeValue = replaceText(textNode.nodeValue);
 }
 
-function replaceText(v)
-{
+function replaceText(v) {
     // Fix some misspellings
     v = v.replace(/\b(M|m)illienial(s)?\b/g, "$1illennial$2");
     v = v.replace(/\b(M|m)illenial(s)?\b/g, "$1illennial$2");
