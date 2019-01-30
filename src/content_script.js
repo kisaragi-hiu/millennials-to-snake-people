@@ -1,17 +1,17 @@
 function walk(rootNode) {
-  // Find all the text nodes in rootNode
-  let node;
-  let walker = document.createTreeWalker(
-    rootNode,
-    NodeFilter.SHOW_TEXT,
-    null,
-    false
-  );
+    // Find all the text nodes in rootNode
+    let node;
+    let walker = document.createTreeWalker(
+        rootNode,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
 
-  // Modify each text node's value
-  while ((node = walker.nextNode())) {
-    node.nodeValue = replaceText(node.nodeValue);
-  }
+    // Modify each text node's value
+    while ((node = walker.nextNode())) {
+        node.nodeValue = replaceText(node.nodeValue);
+    }
 }
 
 function replaceText(str) {
@@ -40,13 +40,13 @@ function replaceText(str) {
 
 // Returns true if a node should *not* be altered in any way
 function isForbiddenNode(node) {
-  return (
-    node.isContentEditable || // DraftJS and many others
-    (node.parentNode && node.parentNode.isContentEditable) || // Special case for Gmail
-    (node.tagName &&
-      (node.tagName.toLowerCase() == "textarea" || // Some catch-alls
-        node.tagName.toLowerCase() == "input"))
-  );
+    return (
+        node.isContentEditable || // DraftJS and many others
+        (node.parentNode && node.parentNode.isContentEditable) || // Special case for Gmail
+        (node.tagName &&
+            (node.tagName.toLowerCase() == "textarea" || // Some catch-alls
+                node.tagName.toLowerCase() == "input"))
+    );
 }
 
 // The callback used for the document body and title observers
@@ -69,26 +69,26 @@ function observerCallback(mutations) {
 
 // Walk the doc (document) body, replace the title, and observe the body and title
 function walkAndObserve(doc) {
-  let docTitle = doc.getElementsByTagName("title")[0];
-  let observerConfig = {
-    characterData: true,
-    childList: true,
-    subtree: true
-  };
+    let docTitle = doc.getElementsByTagName("title")[0];
+    let observerConfig = {
+        characterData: true,
+        childList: true,
+        subtree: true
+    };
 
-  // Do the initial text replacements in the document body and title
-  walk(doc.body);
-  doc.title = replaceText(doc.title);
+    // Do the initial text replacements in the document body and title
+    walk(doc.body);
+    doc.title = replaceText(doc.title);
 
-  // Observe the body so that we replace text in any added/modified nodes
-  let bodyObserver = new MutationObserver(observerCallback);
-  bodyObserver.observe(doc.body, observerConfig);
+    // Observe the body so that we replace text in any added/modified nodes
+    let bodyObserver = new MutationObserver(observerCallback);
+    bodyObserver.observe(doc.body, observerConfig);
 
-  // Observe the title so we can handle any modifications there
-  if (docTitle) {
-    let titleObserver = new MutationObserver(observerCallback);
-    titleObserver.observe(docTitle, observerConfig);
-  }
+    // Observe the title so we can handle any modifications there
+    if (docTitle) {
+        let titleObserver = new MutationObserver(observerCallback);
+        titleObserver.observe(docTitle, observerConfig);
+    }
 }
 
 walkAndObserve(document);
