@@ -49,24 +49,6 @@ function isForbiddenNode(node) {
     );
 }
 
-// The callback used for the document body and title observers
-function observerCallback(mutations) {
-  mutations.forEach(mutation => {
-    mutation.addedNodes.forEach(node => {
-      // Should never operate on user-editable content
-      if (!isForbiddenNode(node)) {
-        if (node.nodeType === 3) {
-          // Replace the text for text nodes
-          node.nodeValue = replaceText(node.nodeValue);
-        } else {
-          // Otherwise, find text nodes within the given node and replace text
-          walk(node);
-        }
-      }
-    });
-  });
-}
-
 // Walk the doc (document) body, replace the title, and observe the body and title
 function walkAndObserve(doc) {
     let docTitle = doc.getElementsByTagName("title")[0];
@@ -74,6 +56,24 @@ function walkAndObserve(doc) {
         characterData: true,
         childList: true,
         subtree: true
+    };
+    // The callback used for the document body and title observers
+    const observerCallback = (mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                // Should never operate on user-editable content
+                if (isForbiddenNode(node)) {
+                    return;
+                }
+                if (node.nodeType === 3) {
+                    // Replace the text for text nodes
+                    node.nodeValue = replaceText(node.nodeValue);
+                } else {
+                    // Otherwise, find text nodes within the given node and replace text
+                    walk(node);
+                }
+            });
+        });
     };
 
     // Do the initial text replacements in the document body and title
