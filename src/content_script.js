@@ -14,14 +14,30 @@ function walk(rootNode) {
     }
 }
 
+const replaceMapping = new Map([
+    [/\bTaiwan, province of [a-zA-Z]*\b/gu, "Taiwan"],
+    [/\bTaiwan, China\b/gu, "Taiwan"],
+    [/\bChina Taiwan\b/gu, "ROC (Taiwan)"],
+    [/\bTaiwan China\b/gu, "Taiwan (ROC)"],
+    [/中[國国][臺台]([灣湾])/gu, "台$1"],
+    [/[臺台]([灣湾])省/gu, "台$1"]
+]);
+
 function replaceText(string) {
-    return string
-        .replace(/\bTaiwan, province of [a-zA-Z]*\b/gu, "Taiwan")
-        .replace(/\bTaiwan, China\b/gu, "Taiwan")
-        .replace(/\bChina Taiwan\b/gu, "ROC (Taiwan)")
-        .replace(/\bTaiwan China\b/gu, "Taiwan (ROC)")
-        .replace(/中[國国][臺台]([灣湾])/gu, "台$1")
-        .replace(/[臺台]([灣湾])省/gu, "台$1");
+    replaceMapping.forEach((str, regexp) => {
+        string = string.replace(regexp, str);
+    });
+    return string;
+}
+
+function stringMatches(string) {
+    let matches = false;
+    replaceMapping.forEach((_, regexp) => {
+        if (string.match(regexp)) {
+            matches = true;
+        }
+    });
+    return matches;
 }
 
 // Returns true if a node should *not* be altered in any way
