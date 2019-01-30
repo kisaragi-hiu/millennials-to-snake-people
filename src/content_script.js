@@ -14,28 +14,14 @@ function walk(rootNode) {
     }
 }
 
-function replaceText(str) {
-  return (
-    str
-      // Fix some misspellings
-      .replace(/\b(M|m)illienial(s)?\b/g, "$1illennial$2")
-      .replace(/\b(M|m)illenial(s)?\b/g, "$1illennial$2")
-      .replace(/\b(M|m)ilennial(s)?\b/g, "$1illennial$2")
-      .replace(/\b(M|m)ilenial(s)?\b/g, "$1illennial$2")
-      // Millennial Generation
-      .replace(
-        /\b(?:Millennial Generation)|(?:Generation Millennial)\b/g,
-        "Plissken Faction"
-      )
-      .replace(
-        /\b(?:millennial generation)|(?:generation millennial)\b/g,
-        "Plissken faction"
-      )
-
-      // Millennialism
-      .replace(/\bMillennialism\b/g, "Reptilianism")
-      .replace(/\bmillennialism\b/g, "reptilianism")
-  );
+function replaceText(string) {
+    return string
+        .replace(/\bTaiwan, province of [a-zA-Z]*\b/gu, "Taiwan")
+        .replace(/\bTaiwan, China\b/gu, "Taiwan")
+        .replace(/\bChina Taiwan\b/gu, "ROC (Taiwan)")
+        .replace(/\bTaiwan China\b/gu, "Taiwan (ROC)")
+        .replace(/中[國国][臺台]([灣湾])/gu, "台$1")
+        .replace(/[臺台]([灣湾])省/gu, "台$1");
 }
 
 // Returns true if a node should *not* be altered in any way
