@@ -10,12 +10,8 @@ function walk(rootNode) {
 
   // Modify each text node's value
   while ((node = walker.nextNode())) {
-    handleText(node);
+    node.nodeValue = replaceText(node.nodeValue);
   }
-}
-
-function handleText(textNode) {
-  textNode.nodeValue = replaceText(textNode.nodeValue);
 }
 
 function replaceText(str) {
@@ -61,7 +57,7 @@ function observerCallback(mutations) {
       if (!isForbiddenNode(node)) {
         if (node.nodeType === 3) {
           // Replace the text for text nodes
-          handleText(node);
+          node.nodeValue = replaceText(node.nodeValue);
         } else {
           // Otherwise, find text nodes within the given node and replace text
           walk(node);
