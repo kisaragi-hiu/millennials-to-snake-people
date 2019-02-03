@@ -1,0 +1,23 @@
+{
+    "name": "twcn-to-tw",
+    "version": "1.0.0",
+    "description": "Browser extension that reveals the *real* truth behind Millennials.",
+    "main": "twcn-to-tw.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kisaragi-hiu/millennials-to-snake-people.git"
+    },
+    "author": "Kisaragi Hiu",
+    "license": "WTFPL",
+    "bugs": {
+        "url": "https://github.com/kisaragi-hiu/millennials-to-snake-people/issues"
+    },
+    "homepage": "https://github.com/kisaragi-hiu/millennials-to-snake-people#readme",
+    "devDependencies": {
+        "jest": "23.5.0",
+        "jest-dom": "2.1.1"
+    }
+}
