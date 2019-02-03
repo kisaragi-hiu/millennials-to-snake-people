@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Taiwan Province Eliminator",
-  "description": "Never see \"Taiwan, province of [redacted]\" again ",
+  "name": "twcn-to-tw",
+  "description": "Never see \"Taiwan, province of [redacted]\" again.",
   "author": "Kisaragi Hiu",
   "version": "1.0",
   "icons": {
