@@ -1,19 +1,3 @@
-function walk(rootNode) {
-    // Find all the text nodes in rootNode
-    let node;
-    let walker = document.createTreeWalker(
-        rootNode,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-    );
-
-    // Modify each text node's value
-    while ((node = walker.nextNode())) {
-        node.nodeValue = replaceText(node.nodeValue);
-    }
-}
-
 const replaceMapping = new Map([
     [/\bTaiwan, province of [a-zA-Z]*\b/gu, "Taiwan"],
     [/\bTaiwan, China\b/gu, "Taiwan"],
@@ -49,6 +33,22 @@ function isForbiddenNode(node) {
             (node.tagName.toLowerCase() == "textarea" || // Some catch-alls
                 node.tagName.toLowerCase() == "input"))
     );
+}
+
+function walk(rootNode) {
+    // Find all the text nodes in rootNode
+    let node;
+    let walker = document.createTreeWalker(
+        rootNode,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+
+    // Modify each text node's value
+    while ((node = walker.nextNode())) {
+        node.nodeValue = replaceText(node.nodeValue);
+    }
 }
 
 // Walk the doc (document) body, replace the title, and observe the body and title
