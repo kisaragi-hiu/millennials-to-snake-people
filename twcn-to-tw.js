@@ -1,7 +1,8 @@
 const replaceMapping = new Map([
+    [/\bChina, Republic of\b/, "Taiwan (ROC)"],
     [/\bTaiwan, province of [a-zA-Z]*\b/gu, "Taiwan"],
     [/\bTaiwan, China\b/gu, "Taiwan"],
-    [/\bChina Taiwan\b/gu, "ROC (Taiwan)"],
+    [/\bChina,* Taiwan\b/gu, "ROC (Taiwan)"],
     [/\bTaiwan China\b/gu, "Taiwan (ROC)"],
     [/中[國国][臺台]([灣湾])/gu, "台$1"],
     [/[臺台]([灣湾])省/gu, "台$1"]
