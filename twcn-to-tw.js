@@ -55,9 +55,21 @@ function walk(rootNode) {
     }
 }
 
-// Walk the doc (document) body, replace the title, and observe the body and title
-function walkAndObserve(doc) {
-    let docTitle = doc.getElementsByTagName("title")[0];
+// export functions for testing
+if (typeof module !== "undefined") {
+    module.exports = {
+        replaceMapping,
+        replaceText,
+        replaceParagraph,
+        stringMatches,
+        isForbiddenNode
+    };
+}
+
+// Main
+if (typeof MutationObserver !== "undefined") {
+    // Walk the doc (document) body, replace the title, and observe the body and title
+    let docTitle = document.getElementsByTagName("title")[0];
     let observerConfig = {
         characterData: true,
         childList: true,
@@ -83,12 +95,12 @@ function walkAndObserve(doc) {
     };
 
     // Do the initial text replacements in the document body and title
-    walk(doc.body);
-    doc.title = replaceText(doc.title);
+    walk(document.body);
+    document.title = replaceText(document.title);
 
     // Observe the body so that we replace text in any added/modified nodes
     let bodyObserver = new MutationObserver(observerCallback);
-    bodyObserver.observe(doc.body, observerConfig);
+    bodyObserver.observe(document.body, observerConfig);
 
     // Observe the title so we can handle any modifications there
     if (docTitle) {
@@ -96,5 +108,3 @@ function walkAndObserve(doc) {
         titleObserver.observe(docTitle, observerConfig);
     }
 }
-
-walkAndObserve(document);

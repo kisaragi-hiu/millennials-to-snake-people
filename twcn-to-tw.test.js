@@ -1,5 +1,5 @@
-require("./twcn-to-tw.js");
+let t = require("./twcn-to-tw.js");
 
 test("replace text", () => {
-    expect(replaceText("Taiwan")).toBe("Taiwan");
+    expect(t.replaceText("Taiwan")).toBe("Taiwan");
 });
