@@ -14,6 +14,10 @@ function replaceText(string) {
     return string;
 }
 
+function replaceParagraph(node) {
+    node.innerHTML = replaceText(node.innerHTML);
+}
+
 function stringMatches(string) {
     let matches = false;
     replaceMapping.forEach((_, regexp) => {
